@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "the-glitch-events",
+  "version": "${version}",
+  "name": "The Glitch - Events",
+  "description": "Utility plugin for events such as UHCs",
+  "authors": [
+    "KJP12"
+  ],
+  "contact": {
+    "sources": "https://github.com/the-glitch-network/fabric-events",
+    "discord": "https://discord.gg/EmPS9y9"
+  },
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "glitch-events.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=${minecraft_required}",
+    "fabricloader": ">=0.11.1",
+    "java": ">=15"
+  },
+  "recommends": {
+    "luckperms": "*"
+  }
+}
