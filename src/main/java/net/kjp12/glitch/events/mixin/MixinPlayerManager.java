@@ -6,14 +6,18 @@ import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.level.LevelGeneratorType;
-import net.minecraft.world.level.LevelInfo;
+import net.minecraft.util.registry.DynamicRegistryManager;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.GameMode;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Set;
 
 /**
  * @author KJP12
@@ -22,18 +26,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerManager.class)
 public class MixinPlayerManager {
     @Redirect(method = "onPlayerConnect", at = @At(value = "NEW", target = "net/minecraft/network/packet/s2c/play/GameJoinS2CPacket"))
-    private GameJoinS2CPacket events$onPlayerConnect(int id, LevelInfo.GameMode gameMode, boolean hardCore, int viewDistance, Difficulty difficulty, int maxPlayers, LevelGeneratorType levelGeneratorType, boolean reducedDebugInfo){
-        if(Main.currentEventManager != null) {
-            return new GameJoinS2CPacket(id, LevelInfo.GameMode.SPECTATOR, false, viewDistance, difficulty, maxPlayers, levelGeneratorType, true);
+    private GameJoinS2CPacket events$onPlayerConnect(int playerEntityId, GameMode gameMode, GameMode previousGameMode,
+                                                     long sha256Seed, boolean hardcore, Set<RegistryKey<World>> dimensionIds,
+                                                     DynamicRegistryManager.Impl registryManager, DimensionType dimensionType,
+                                                     RegistryKey<World> dimensionId, int maxPlayers, int chunkLoadDistance,
+                                                     boolean reducedDebugInfo, boolean showDeathScreen, boolean debugWorld,
+                                                     boolean flatWorld) {
+        if (Main.currentEventManager != null) {
+            return new GameJoinS2CPacket(playerEntityId, GameMode.SPECTATOR, gameMode, sha256Seed, hardcore, dimensionIds,
+                    registryManager, dimensionType, dimensionId, maxPlayers, chunkLoadDistance, reducedDebugInfo, showDeathScreen,
+                    debugWorld, flatWorld);
         } else {
-            return new GameJoinS2CPacket(id, gameMode, hardCore, viewDistance, difficulty, maxPlayers, levelGeneratorType, reducedDebugInfo);
+            return new GameJoinS2CPacket(playerEntityId, gameMode, previousGameMode, sha256Seed, hardcore, dimensionIds,
+                    registryManager, dimensionType, dimensionId, maxPlayers, chunkLoadDistance, reducedDebugInfo, showDeathScreen,
+                    debugWorld, flatWorld);
         }
     }
 
-    @Inject(method = "onPlayerConnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;sendToAll(Lnet/minecraft/text/Text;)V"))
+    @Inject(method = "onPlayerConnect", at = @At("TAIL"))
     private void events$onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo cbi) {
         if(Main.currentEventManager != null) {
-            player.sendMessage(new LiteralText("You have joined mid-game. You will be a spectator for the remainder of the game."));
+            player.setGameMode(GameMode.SPECTATOR);
+            player.sendMessage(new LiteralText("You have joined mid-game. You will be a spectator for the remainder of the game."), true);
         }
     }
 

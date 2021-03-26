@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(ServerPlayerEntity.class)
 public class MixinServerPlayerEntity {
-    @Inject(method = "onKilled", at = @At("TAIL"))
+    @Inject(method = "onDeath", at = @At("TAIL"))
     private void events$onKilled(CallbackInfo cbi) {
         if(Main.currentEventManager != null) {
             Main.currentEventManager.onDeath((ServerPlayerEntity)(Object)this);

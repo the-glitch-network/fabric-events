@@ -3,11 +3,9 @@
   "package": "net.kjp12.glitch.events.mixin",
   "compatibilityLevel": "JAVA_14",
   "mixins": [
-    "MixinCommandManager",
-    "MixinPlayerManager",
     "MixinHungerManager",
-    "MixinServerPlayerEntity",
-    "MixinEntity"
+    "MixinPlayerManager",
+    "MixinServerPlayerEntity"
   ],
   "injectors": {
     "defaultRequire": 1

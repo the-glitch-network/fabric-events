@@ -13,7 +13,7 @@ val yarn_mappings: String by project
 val loader_version: String by project
 val jupiter_version: String by project
 val fabric_api_version: String by project
-// val fabric_permissions_version: String by project
+val fabric_permissions_version: String by project
 
 group = "net.kjp12"
 version = "0.0.0"
@@ -25,19 +25,19 @@ configure<JavaPluginConvention> {
 
 repositories {
     mavenCentral()
-    maven { url = URI.create("https://maven.legacyfabric.net/") }
     maven { url = URI.create("https://oss.sonatype.org/content/repositories/snapshots") }
 }
 
 dependencies {
     minecraft("com.mojang", "minecraft", minecraft_version)
     mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
-    modImplementation("net.fabricmc", "fabric-loader-1.8.9", loader_version)
+    modImplementation("net.fabricmc", "fabric-loader", loader_version)
+    modImplementation(fabricApi.module("fabric-commands-v0", fabric_api_version))
+    modImplementation(fabricApi.module("fabric-lifecycle-events-v1", fabric_api_version))
     implementation(project(":utilities"))
-    runtimeOnly("com.google.guava", "guava", "23.6-jre")
     testImplementation("org.junit.jupiter", "junit-jupiter-api", jupiter_version)
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", jupiter_version)
-    // modImplementation("me.lucko", "fabric-permissions-api", fabric_permissions_version)
+    modImplementation("me.lucko", "fabric-permissions-api", fabric_permissions_version)
 }
 
 minecraft {

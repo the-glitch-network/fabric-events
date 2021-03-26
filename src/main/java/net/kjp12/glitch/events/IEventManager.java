@@ -9,6 +9,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public interface IEventManager {
     void onActivate();
 
+    void onEnd();
+
     boolean hasStarted();
 
     void tick();

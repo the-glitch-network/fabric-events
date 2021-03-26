@@ -12,7 +12,11 @@
     "discord": "https://discord.gg/EmPS9y9"
   },
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": [
+      "net.kjp12.glitch.events.Main"
+    ]
+  },
   "mixins": [
     "glitch-events.mixins.json"
   ],
