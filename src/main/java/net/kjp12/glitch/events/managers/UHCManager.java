@@ -134,6 +134,7 @@ public class UHCManager implements IEventManager {
 
     @Override
     public void onDeath(ServerPlayerEntity player) {
+        if (players == null) return;
         player.setGameMode(GameMode.SPECTATOR);
         players.remove(player);
 
