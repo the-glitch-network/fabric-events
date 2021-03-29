@@ -75,8 +75,8 @@ public class Main implements ModInitializer {
             summonLightning(world, player.getX(), player.getY(), player.getZ());
             player.updatePositionAndAngles(ox, oy, oz, yaw, 0F);
             player.refreshPositionAfterTeleport(ox, oy, oz);
-            player.applyStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, (duration - rd) / 50, 5));
-            player.applyStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, (duration - rd) / 50, 5));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, (duration - rd) / 50, 5));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, (duration - rd) / 50, 5));
             player.world.setBlockState(new BlockPos(ox, oy - 1, oz), Blocks.STONE.getDefaultState());
             if (postTask != null) postTask.run();
         }), rd, TimeUnit.MILLISECONDS);
