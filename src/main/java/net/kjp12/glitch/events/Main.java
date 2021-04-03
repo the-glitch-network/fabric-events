@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2021 KJP12
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * */
 package net.kjp12.glitch.events;// Created 2021-03-17T19:09:53
 
 import net.fabricmc.api.ModInitializer;
@@ -28,6 +35,7 @@ import java.util.concurrent.TimeUnit;
  * @since 0.0.0
  */
 public class Main implements ModInitializer {
+    public static final long TIMEOUT_DURATION = TimeUnit.MINUTES.toMillis(5);
     public static final String SCOREBOARD_KILLS = "events:kills";
     public static final double PI2 = Math.PI * 2D;
     public static IEventManager currentEventManager;
@@ -73,6 +81,7 @@ public class Main implements ModInitializer {
             var world = (ServerWorld) player.world;
             summonLightning(world, ox, oy, oz);
             summonLightning(world, player.getX(), player.getY(), player.getZ());
+            player.setVelocity(0, 0, 0);
             player.updatePositionAndAngles(ox, oy, oz, yaw, 0F);
             player.refreshPositionAfterTeleport(ox, oy, oz);
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, (duration - rd) / 50, 5));

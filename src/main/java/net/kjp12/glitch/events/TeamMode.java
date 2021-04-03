@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2021 KJP12
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * */
 package net.kjp12.glitch.events;// Created 2021-03-20T20:07:07
 
 import java.util.Map;

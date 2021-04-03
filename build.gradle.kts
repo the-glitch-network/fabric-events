@@ -1,5 +1,4 @@
 import java.net.URI
-import java.util.function.Function as JFunction
 
 plugins {
     java
@@ -11,7 +10,6 @@ plugins {
 val minecraft_version: String by project
 val yarn_mappings: String by project
 val loader_version: String by project
-val jupiter_version: String by project
 val fabric_api_version: String by project
 val fabric_permissions_version: String by project
 
@@ -35,14 +33,7 @@ dependencies {
     modImplementation(fabricApi.module("fabric-commands-v0", fabric_api_version))
     modImplementation(fabricApi.module("fabric-lifecycle-events-v1", fabric_api_version))
     implementation(project(":utilities"))
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", jupiter_version)
-    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", jupiter_version)
     modImplementation("me.lucko", "fabric-permissions-api", fabric_permissions_version)
-}
-
-minecraft {
-    intermediaryUrl = JFunction { "https://maven.legacyfabric.net/net/fabricmc/intermediary/$it/intermediary-$it-v2.jar"; }
-    //accessWidener = projectDir.resolve("src/main/resources/helium.accesswidener")
 }
 
 tasks {

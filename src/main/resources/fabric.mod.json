@@ -12,6 +12,9 @@
     "discord": "https://discord.gg/EmPS9y9"
   },
   "environment": "*",
+  "license": [
+    "MPL-2.0"
+  ],
   "entrypoints": {
     "main": [
       "net.kjp12.glitch.events.Main"

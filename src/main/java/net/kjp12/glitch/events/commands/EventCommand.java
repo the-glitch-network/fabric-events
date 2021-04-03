@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2021 KJP12
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * */
 package net.kjp12.glitch.events.commands;// Created 2021-03-17T19:30:08
 
 import com.mojang.brigadier.Command;
